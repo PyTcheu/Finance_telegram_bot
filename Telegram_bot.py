@@ -1,12 +1,18 @@
 import requests
 import telegram_send
-
 import schedule
 import time
-
 import os
-
 from bs4 import BeautifulSoup
+
+CONFS = ['user1.conf','user2.conf']
+
+COINS = {'Dolar':'USD-BRL',
+         'Euro':'EUR-BRL'}
+
+STOCKS = {'VVAR3':'via-varejo-sa',
+          'PETR4':'petrobras-pn'}
+
 
 def get_coin_bid(coin):
     response = requests.get('https://economia.awesomeapi.com.br/json/last/'+ coin)
@@ -22,21 +28,30 @@ def get_stock_price(paper):
     
     return stock_price.split('>')[1].split('<')[0]
 
-def send_periodic_message():
-    dol = "Cotação do Dolar Hoje: R$ " + get_coin_bid('USD-BRL')
-    eur = "Cotação do Euro Hoje: R$ " + get_coin_bid('EUR-BRL')
-    petr4 = "PETR4: " + get_stock_price('petrobras-pn')
-    vvar3 = "VVAR3: " + get_stock_price('via-varejo-sa')
-    
-    queue = [dol, eur, petr4, vvar3]
-    
+def form_message():
     full_message = 'Bom dia kamakada! Segue resumão de hoje: \n\n'
-    for msg in queue:
-        full_message += msg + '\n'
+    full_message += '\n Moedas: \n'
+
+    for k, v in COINS.items():
+        full_message += "Cotação do  " + k + " hoje: R$ " + get_coin_bid(v) + '\n'
+
+    full_message += '\n Acões: \n'
+
+    for k, v in STOCKS.items():
+        full_message += k + " : R$ " + get_stock_price(v) + '\n'
+
+    return full_message
     
-    print(full_message)
-    telegram_send.send(messages=[full_message], conf='user1.conf')
-    telegram_send.send(messages=[full_message], conf='user2.conf')
+
+def send_periodic_message():
+
+    
+    full_msg = form_message()
+    
+    print(full_msg)
+
+    for user in CONFS:
+        telegram_send.send(messages=[full_msg], conf=user)
 
 schedule.every(5).seconds.do(send_periodic_message)
 
