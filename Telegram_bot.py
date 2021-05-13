@@ -5,7 +5,7 @@ import time
 import os
 from bs4 import BeautifulSoup
 
-CONFS = ['user1.conf','user2.conf']
+CONFS = ['user1.conf','user2.conf','user3.conf','user4.conf']
 
 COINS = {'Dolar':'USD-BRL',
          'Euro':'EUR-BRL'}
@@ -29,7 +29,7 @@ def get_stock_price(paper):
     return stock_price.split('>')[1].split('<')[0]
 
 def form_message():
-    full_message = 'Bom dia kamakada! Segue resumão de hoje: \n\n'
+    full_message = 'Bom dia! Segue resumão de hoje: \n\n'
     full_message += '\n Moedas: \n'
 
     for k, v in COINS.items():
