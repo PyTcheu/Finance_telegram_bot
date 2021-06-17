@@ -11,6 +11,7 @@ import telegram_send
 import schedule
 import time
 import os
+import random
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 
@@ -20,9 +21,12 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 # In[2]:
 
-
+#Token PRD
 token = '1796099831:AAGteQJXlcNd2dLSSq0kbbqa0QoV0B_xtTU'
-    
+
+#Token DEV
+#token = '1788977298:AAG7qKmlDhSazNpCMBjQ3GonWJzGLhj1Mno'
+
 bot = telegram.Bot(token) #Replace TOKEN with your token string
 updater = Updater(token=token, use_context=True) #Replace TOKEN with your token string
 
@@ -143,8 +147,12 @@ def dolar(update, context):
 # In[11]:
 
 
-def hello(update, context):
-    context.bot.send_message(chat_id=update.effective_chat.id, text='Eai Kamako')
+def hello(update, context): 
+    photo = ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRowHhdTB04EQSOcRuRTqLHvk96K4lS3UupYg&usqp=CAU', 'https://img.freepik.com/fotos-gratis/o-orangotango-jovem-sorriu-e-agiu-como_60359-323.jpg?size=626&ext=jpg', 'https://i.pinimg.com/originals/73/58/70/7358702b2780ce3933cf474c15035dde.jpg'] 
+ 
+    caption = ['Eai Kamako', 'Aoba', 'Salve Kamakada'] 
+     
+    context.bot.sendPhoto(chat_id=update.effective_chat.id, photo = random.choice(photo), caption = random.choice(caption))
 
 
 # In[12]:
