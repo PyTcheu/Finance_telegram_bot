@@ -17,6 +17,7 @@ import os
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 import stockstats
+import random 
 
 from bs4 import BeautifulSoup
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
