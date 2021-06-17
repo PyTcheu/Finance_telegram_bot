@@ -174,18 +174,6 @@ import yfinance as yf
 from pandas_datareader import data as web # Evita a escrita do data e troca pelo web
 from datetime import datetime
 
-
-# def get_stock_chart(paper):
-#     paper_data = yf.download(
-#     tickers=paper + '.SA', 
-#     period="1d",
-#     interval="1m")
-#     
-#     plt.plot(paper_data['Close'])
-#     plt.savefig(paper + '.png')
-#     plt.clf()
-#     return paper_data
-
 # In[14]:
 
 
@@ -194,7 +182,6 @@ def get_stock_chart(paper):
     tickers=paper + '.SA', 
     period="3mo",
     interval="1d")
-    # Plot the close prices
 
     data = data.reset_index()
     data = data.rename(columns={data.columns[0]:'Date'})
