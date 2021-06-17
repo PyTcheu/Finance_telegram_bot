@@ -18,10 +18,10 @@ from pandas_datareader import data as web # Evita a escrita do data e troca pelo
 from datetime import datetime
 
 #Token PRD
-token = '1796099831:AAGteQJXlcNd2dLSSq0kbbqa0QoV0B_xtTU'
+#token = '1796099831:AAGteQJXlcNd2dLSSq0kbbqa0QoV0B_xtTU'
 
 #Token DEV
-#token = '1788977298:AAG7qKmlDhSazNpCMBjQ3GonWJzGLhj1Mno'
+token = '1788977298:AAG7qKmlDhSazNpCMBjQ3GonWJzGLhj1Mno'
     
 bot = telegram.Bot(token) #Replace TOKEN with your token string
 updater = Updater(token=token, use_context=True) #Replace TOKEN with your token string
