@@ -7,6 +7,7 @@ import requests
 import telegram_send
 import schedule
 import time
+import random
 import os
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
@@ -16,7 +17,11 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from pandas_datareader import data as web # Evita a escrita do data e troca pelo web
 from datetime import datetime
 
-token = '1796099831:AAGteQJXlcNd2dLSSq0kbbqa0QoV0B_xtTU'
+#Token PRD
+#token = '1796099831:AAGteQJXlcNd2dLSSq0kbbqa0QoV0B_xtTU'
+
+#Token DEV
+token = '1788977298:AAG7qKmlDhSazNpCMBjQ3GonWJzGLhj1Mno'
     
 bot = telegram.Bot(token) #Replace TOKEN with your token string
 updater = Updater(token=token, use_context=True) #Replace TOKEN with your token string
@@ -107,8 +112,11 @@ def dolar(update, context):
 
 
 def hey(update, context):
-    image = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRowHhdTB04EQSOcRuRTqLHvk96K4lS3UupYg&usqp=CAU"
-    context.bot.sendPhoto(chat_id=update.effective_chat.id, photo = image, caption = 'Eai Kamako')
+    photo = ['https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRowHhdTB04EQSOcRuRTqLHvk96K4lS3UupYg&usqp=CAU', 'https://img.freepik.com/fotos-gratis/o-orangotango-jovem-sorriu-e-agiu-como_60359-323.jpg?size=626&ext=jpg', 'https://i.pinimg.com/originals/73/58/70/7358702b2780ce3933cf474c15035dde.jpg'] 
+ 
+    caption = ['Eai Kamako', 'Aoba', 'Salve Kamakada'] 
+     
+    context.bot.sendPhoto(chat_id=update.effective_chat.id, photo = random.choice(photo), caption = random.choice(caption))
 
 
 def chart(update, context):
