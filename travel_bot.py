@@ -6,13 +6,10 @@
 
 import telegram
 import requests
-import telegram_send
 import pandas as pd # Para evitar escrever pandas e trocar pela escrita apenas de pd para facilitar
 import plotly.graph_objects as go
 import matplotlib.pyplot as plt
 import yfinance as yf 
-import schedule
-import time
 import os
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
@@ -25,15 +22,13 @@ from pandas_datareader import data as web # Evita a escrita do data e troca pelo
 from datetime import datetime
 from stockstats import StockDataFrame
 from plotly.subplots import make_subplots
-from dotenv import load_dotenv
-
-load_dotenv()
+from decouple import config
 
 # In[2]:
 
 
-TOKEN = os.getenv('TOKEN')
-    
+TOKEN = '1796099831:AAELnNVjGV1dVwYGpk4ZG08jZciUbvgp4UM'
+
 bot = telegram.Bot(TOKEN) #Replace TOKEN with your token string
 updater = Updater(token=TOKEN, use_context=True) #Replace TOKEN with your token string
 
@@ -252,7 +247,7 @@ dispatcher.add_handler(CommandHandler("chart", chart))
 
 
 # In[17]:
-
+print(TOKEN)
 
 updater.start_polling()
 
