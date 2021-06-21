@@ -25,15 +25,14 @@ from pandas_datareader import data as web # Evita a escrita do data e troca pelo
 from datetime import datetime
 from stockstats import StockDataFrame
 from plotly.subplots import make_subplots
+from dotenv import load_dotenv
 
+load_dotenv()
 
 # In[2]:
 
 
-TOKEN = None
-
-with open("token.txt") as f:
-    TOKEN = f.read().strip()
+TOKEN = os.getenv('TOKEN')
     
 bot = telegram.Bot(TOKEN) #Replace TOKEN with your token string
 updater = Updater(token=TOKEN, use_context=True) #Replace TOKEN with your token string
