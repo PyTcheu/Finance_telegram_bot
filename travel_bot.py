@@ -22,7 +22,6 @@ from pandas_datareader import data as web # Evita a escrita do data e troca pelo
 from datetime import datetime
 from stockstats import StockDataFrame
 from plotly.subplots import make_subplots
-from decouple import config
 
 # In[2]:
 
