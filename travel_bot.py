@@ -246,7 +246,6 @@ dispatcher.add_handler(CommandHandler("chart", chart))
 
 
 # In[17]:
-print(TOKEN)
 
 updater.start_polling()
 
