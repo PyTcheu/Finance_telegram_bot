@@ -23,13 +23,14 @@ from datetime import datetime
 from stockstats import StockDataFrame
 from plotly.subplots import make_subplots
 
+
 # In[2]:
 
 
-TOKEN = '1796099831:AAELnNVjGV1dVwYGpk4ZG08jZciUbvgp4UM'
-
-bot = telegram.Bot(TOKEN) #Replace TOKEN with your token string
-updater = Updater(token=TOKEN, use_context=True) #Replace TOKEN with your token string
+token = '1796099831:AAELnNVjGV1dVwYGpk4ZG08jZciUbvgp4UM'
+    
+bot = telegram.Bot(token) #Replace TOKEN with your token string
+updater = Updater(token=token, use_context=True) #Replace TOKEN with your token string
 
 dispatcher = updater.dispatcher
 
@@ -155,7 +156,7 @@ def chart(update, context):
     os.remove(paper + '.png')
 
 
-# In[18]:
+# In[12]:
 
 
 def hey(update, context):
@@ -193,27 +194,33 @@ def get_stock_chart(paper):
     data = data.reset_index()
     data = data.rename(columns={data.columns[0]:'Date'})
     
-    fig = make_subplots(rows=2, cols=1, row_heights=[0.6, 0.4])
+    fig = make_subplots(rows=2, cols=1, row_heights=[0.6, 0.4], subplot_titles=("Variação", "RSI"))
+
     fig.add_trace(
         go.Candlestick(x=data['Date'],
             open=data['Open'],
             high=data['High'],
             low=data['Low'],
-            close=data['Close']),
+            close=data['Close'],
+            name='Variation'),
             row=1, col=1)
     
     fig.add_trace(
-        go.Scatter(x=rsi['Date'], y=rsi['RSI']),
+        go.Scatter(x=rsi['Date'], y=rsi['RSI'], name='RSI'),
             row=2, col=1)
+    
+    fig.update_coloraxes(colorbar_tickfont_color='gray')
     
     fig.update_layout(xaxis_rangeslider_visible=False)
     fig.update_layout(paper_bgcolor='#000326')
     fig.update_layout(font_color='white')
-    fig.update_coloraxes(colorbar_tickfont_color='white')
     fig.update_layout(plot_bgcolor='#000326')
+    
+    
+    fig.update_yaxes(range=[0,100], row=2, col=1)
+    fig.update_yaxes(tickmode = 'array',tickvals = [0, 30, 50, 70, 100], row=2, col=1)
+        
     fig.write_image(paper + '.png')
-    
-    
 
 
 # In[14]:
@@ -233,7 +240,7 @@ def calculate_RSI(data_rsi, n=14):
     
 
 
-# In[16]:
+# In[15]:
 
 
 dispatcher.add_handler(CommandHandler("hey", hey))
@@ -245,7 +252,8 @@ dispatcher.add_handler(CommandHandler("stock", stock))
 dispatcher.add_handler(CommandHandler("chart", chart))
 
 
-# In[17]:
+# In[16]:
+
 
 updater.start_polling()
 
