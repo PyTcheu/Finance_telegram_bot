@@ -30,10 +30,13 @@ from plotly.subplots import make_subplots
 # In[2]:
 
 
-token = '1796099831:AAGteQJXlcNd2dLSSq0kbbqa0QoV0B_xtTU'
+TOKEN = None
+
+with open("token.txt") as f:
+    TOKEN = f.read().strip()
     
-bot = telegram.Bot(token) #Replace TOKEN with your token string
-updater = Updater(token=token, use_context=True) #Replace TOKEN with your token string
+bot = telegram.Bot(TOKEN) #Replace TOKEN with your token string
+updater = Updater(token=TOKEN, use_context=True) #Replace TOKEN with your token string
 
 dispatcher = updater.dispatcher
 
