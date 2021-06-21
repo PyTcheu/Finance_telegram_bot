@@ -28,7 +28,6 @@ schedule==1.1.0
 six==1.16.0
 soupsieve==2.2.1
 stockstats==0.3.2
-telegram==0.0.1
 telegram-send==0.25
 tornado==6.1
 tzlocal==2.1
