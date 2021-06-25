@@ -67,23 +67,25 @@ def get_bdrs_price(paper):
 
 
 def get_fiis_price(paper):
-    response = 'https://statusinvest.com.br/fundos-imobiliarios/' + paper
+    response = 'https://www.fundsexplorer.com.br/funds/' + paper
     result = requests.get(response)
     soup = BeautifulSoup(result.content, 'html.parser')
-    stock_price = str(soup.find(class_='value'))
-    var = str(soup.find(title='Variação do valor do ativo com base no dia anterior'))
+    
+    stock_price = str(soup.find(class_='price'))
+    var = str(soup.find(class_='percentage positive'))
+    div_yield = str(soup.find_all(class_='indicator-value')[2])
+    
     
     if stock_price == 'None':
         return get_bdrs_price(paper)
-    else: 
-        stock_price = stock_price.split('>')[1].split('<')[0]
-        var = var.split('\n')[4].split('>')[1].split('<')[0]
-        
-        if not var.startswith('-'):
-            var = '+' + var
             
-        return stock_price, var
-    
+    else: 
+        stock_price = float(stock_price.split('\n')[1].split('$')[1].strip().replace(',','.'))
+        var = var.split('\n')[1].strip()
+        div_yield = float(div_yield.split('\n')[1].strip().replace('%','').replace(',','.'))/100
+        
+            
+        return stock_price, var, div_yield
 
 
 # In[6]:
@@ -100,7 +102,7 @@ def get_stock_price(paper):
         return get_fiis_price(paper)
     else: 
         
-        stock_price = stock_price.split('>')[1].split('<')[0]
+        stock_price = float(stock_price.split('>')[1].split('<')[0].replace(',','.'))
         var = var.split('\n')[4].split('>')[1].split('<')[0]
         
         if not var.startswith('-'):
@@ -167,13 +169,53 @@ def hey(update, context):
     context.bot.sendPhoto(chat_id=update.effective_chat.id, photo = random.choice(photo), caption = random.choice(caption))
 
 
+# In[13]:
+
+
+def simulate_fii(update, context):
+    parameters = " ".join(context.args).split(' ')
+    fii = fii_calculation(parameters[0], parameters[1], parameters[2], parameters[3])
+    
+    msg = "Investindo no Fundo {} com um valor inicial de R${}, "           "aportando com {} cotas ao mês, sob uma rentabilidade de {}% ao mês "           "durante {} meses, você terá R$ {} no fim do prazo e recebendo "           "R$ {} por mês!".format(
+        parameters[0], parameters[1], parameters[3], fii[4], parameters[2], fii[2], fii[3])
+    
+    context.bot.send_message(chat_id=update.effective_chat.id, text=msg)
+
+
+# In[14]:
+
+
+def help(update, context):
+    text = "Olá Kamako, precisando de uma ajuda? Segue lista de comandos e parâmetros: \n\n"            "/dolar ou /vilzyn - Cotação atual do dólar \n"            "/euro - Cotação atual do Euro \n"            "/stock <ação> - Retorna o valor da ação e sua variação no dia \n "            "/chart <ação> - Retorna o gráfico da performance da ação e seu RSI \n "            "/simulate_fii <fii> <valor inicial> <meses> <aporte em cotas> - Realiza uma simulação de FIIs a longo prazo com determinado aporte em quantidade de cotas \n"
+    context.bot.send_message(chat_id=update.effective_chat.id, text=text)
+
+
+# In[15]:
+
+
+def fii_calculation(paper, valor_inicial, tempo_mes, aporte):
+    valor_cota = int(get_fiis_price(paper.lower())[0])
+    taxa = float(get_fiis_price(paper.lower())[2])
+    acumulado = 0
+    total = float(valor_inicial)
+    aporte = int(aporte)
+    for i in range (int(tempo_mes)):
+        acumulado += total * taxa
+        total += aporte * valor_cota
+        if acumulado >= valor_cota:
+            total += (acumulado//valor_cota) * valor_cota
+            acumulado = acumulado - ((acumulado//valor_cota) * valor_cota)
+    total_bruto = total + acumulado
+    return round(total,2), round(acumulado,2), round(total_bruto,2), round(total*taxa,2), taxa*100
+
+
 # In[ ]:
 
 
 
 
 
-# In[13]:
+# In[16]:
 
 
 def get_stock_chart(paper):
@@ -223,7 +265,7 @@ def get_stock_chart(paper):
     fig.write_image(paper + '.png')
 
 
-# In[14]:
+# In[17]:
 
 
 def calculate_RSI(data_rsi, n=14):
@@ -240,8 +282,29 @@ def calculate_RSI(data_rsi, n=14):
     
 
 
-# In[15]:
+# In[ ]:
 
+
+
+    
+
+
+# In[ ]:
+
+
+
+
+
+# In[ ]:
+
+
+
+
+
+# In[18]:
+
+
+dispatcher.add_handler(CommandHandler("help", help))
 
 dispatcher.add_handler(CommandHandler("hey", hey))
 dispatcher.add_handler(CommandHandler('dolar', dolar))
@@ -251,8 +314,10 @@ dispatcher.add_handler(CommandHandler('vilzyn', vilzyn))
 dispatcher.add_handler(CommandHandler("stock", stock))
 dispatcher.add_handler(CommandHandler("chart", chart))
 
+dispatcher.add_handler(CommandHandler("simulate_fii", simulate_fii))
 
-# In[16]:
+
+# In[19]:
 
 
 updater.start_polling()
