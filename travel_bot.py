@@ -81,7 +81,7 @@ def get_fiis_price(paper):
             
     else: 
         stock_price = float(stock_price.split('\n')[1].split('$')[1].strip().replace(',','.'))
-        var = var.split('\n')[1].strip()
+        var = ''
         div_yield = float(div_yield.split('\n')[1].strip().replace('%','').replace(',','.'))/100
         
             
@@ -286,7 +286,6 @@ def calculate_RSI(data_rsi, n=14):
 
 
 
-    
 
 
 # In[ ]:
@@ -295,13 +294,7 @@ def calculate_RSI(data_rsi, n=14):
 
 
 
-# In[ ]:
-
-
-
-
-
-# In[18]:
+# In[19]:
 
 
 dispatcher.add_handler(CommandHandler("help", help))
@@ -317,7 +310,7 @@ dispatcher.add_handler(CommandHandler("chart", chart))
 dispatcher.add_handler(CommandHandler("simulate_fii", simulate_fii))
 
 
-# In[19]:
+# In[20]:
 
 
 updater.start_polling()
