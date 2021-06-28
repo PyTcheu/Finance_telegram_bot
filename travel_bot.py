@@ -215,14 +215,14 @@ def fii_calculation(paper, valor_inicial, tempo_mes, aporte):
 
 
 
-# In[16]:
+# In[18]:
 
 
 def get_stock_chart(paper):
     data = yf.download(
     tickers=paper + '.SA', 
-    period="1w",
-    interval="5m")
+    period="1wk",
+    interval="15m")
     # Plot the close prices
     
     data_rsi = yf.download(
@@ -258,14 +258,20 @@ def get_stock_chart(paper):
     fig.update_layout(font_color='white')
     fig.update_layout(plot_bgcolor='#000326')
     
+    fig.update_xaxes(rangebreaks=[
+            # NOTE: Below values are bound (not single values), ie. hide x to y
+            dict(bounds=["sat", "mon"]),  # hide weekends, eg. hide sat to before mon
+            dict(bounds=[16, 9.5], pattern="hour"),  # hide hours outside of 9.30am-4pm
+            #dict(values=["2020-12-25", "2021-01-01"])  # hide holidays (Christmas and New Year's, etc)
+            ], row=1, col=1)
     
     fig.update_yaxes(range=[0,100], row=2, col=1)
-    fig.update_yaxes(tickmode = 'array',tickvals = [0, 30, 50, 70, 100], row=2, col=1)
+    fig.update_yaxes(tickmode = 'array',tickvals = [0, 30, 70, 100], row=2, col=1)
         
     fig.write_image(paper + '.png')
 
 
-# In[17]:
+# In[19]:
 
 
 def calculate_RSI(data_rsi, n=14):
@@ -294,7 +300,7 @@ def calculate_RSI(data_rsi, n=14):
 
 
 
-# In[19]:
+# In[20]:
 
 
 dispatcher.add_handler(CommandHandler("help", help))
@@ -310,16 +316,10 @@ dispatcher.add_handler(CommandHandler("chart", chart))
 dispatcher.add_handler(CommandHandler("simulate_fii", simulate_fii))
 
 
-# In[20]:
+# In[21]:
 
 
 updater.start_polling()
-
-
-# In[ ]:
-
-
-
 
 
 # In[ ]:
