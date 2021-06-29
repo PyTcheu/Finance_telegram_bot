@@ -121,7 +121,7 @@ def get_stock_price(paper):
 def stock(update, context):
     paper = " ".join(context.args)
     value = get_stock_price(paper.lower())
-    update.message.reply_text(paper.upper() + ": R$" + value[0] + '\n \n Variação do dia: ' + value[1])
+    update.message.reply_text(paper.upper() + ": R$" + str(value[0]) + '\n\nVariação do dia: ' + str(value[1]))
 
 
 # In[8]:
@@ -186,7 +186,7 @@ def simulate_fii(update, context):
 
 
 def help(update, context):
-    text = "Olá Kamako, precisando de uma ajuda? Segue lista de comandos e parâmetros: \n\n"            "/dolar ou /vilzyn - Cotação atual do dólar \n"            "/euro - Cotação atual do Euro \n"            "/stock <ação> - Retorna o valor da ação e sua variação no dia \n "            "/chart <ação> - Retorna o gráfico da performance da ação e seu RSI \n "            "/simulate_fii <fii> <valor inicial> <meses> <aporte em cotas> - Realiza uma simulação de FIIs a longo prazo com determinado aporte em quantidade de cotas \n"
+    text = "Olá Kamako, precisando de uma ajuda? Segue lista de comandos e parâmetros: \n\n"            "/dolar ou /vilzyn - Cotação atual do dólar \n"            "/euro - Cotação atual do Euro \n"            "/stock <ação> - Retorna o valor da ação e sua variação no dia \n"            "/chart <ação> - Retorna o gráfico da performance da ação e seu RSI \n"            "/simulate_fii <fii> <valor inicial> <meses> <aporte em cotas> - Realiza uma simulação de FIIs a longo prazo com determinado aporte em quantidade de cotas \n"
     context.bot.send_message(chat_id=update.effective_chat.id, text=text)
 
 
@@ -215,7 +215,7 @@ def fii_calculation(paper, valor_inicial, tempo_mes, aporte):
 
 
 
-# In[18]:
+# In[16]:
 
 
 def get_stock_chart(paper):
@@ -271,7 +271,7 @@ def get_stock_chart(paper):
     fig.write_image(paper + '.png')
 
 
-# In[19]:
+# In[17]:
 
 
 def calculate_RSI(data_rsi, n=14):
@@ -300,7 +300,7 @@ def calculate_RSI(data_rsi, n=14):
 
 
 
-# In[20]:
+# In[18]:
 
 
 dispatcher.add_handler(CommandHandler("help", help))
@@ -316,7 +316,7 @@ dispatcher.add_handler(CommandHandler("chart", chart))
 dispatcher.add_handler(CommandHandler("simulate_fii", simulate_fii))
 
 
-# In[21]:
+# In[19]:
 
 
 updater.start_polling()
