@@ -9,7 +9,7 @@ from stock import stock, simulate_fii
 from chart import chart
 from coin import vilzyn, dolar, euro
 
-token = '1796099831:AAELnNVjGV1dVwYGpk4ZG08jZciUbvgp4UM'
+token = '1796099831:AAHUR1939omXqYfVf_CsyxeiH184IWmiNU4'
     
 bot = telegram.Bot(token) #Replace TOKEN with your token string
 updater = Updater(token=token, use_context=True) #Replace TOKEN with your token string
