@@ -18,7 +18,7 @@ hp_model = pickle.load(open(filename, 'rb'))
 
 def model_predict(param_list):
     
-    X = pd.DataFrame(get_dummies(param_list, df))
+    X = pd.DataFrame(get_dummies(param_list, df)).iloc[1:,:]
     predicted_price = hp_model.predict(X)
 
     return predicted_price
@@ -33,6 +33,6 @@ def predict_house_price(update, context):
 
 def get_dummies(data, df):
     df_dummies = pd.get_dummies(data)
-    dummies_frame = pd.get_dummies(df.iloc[:1,1:])
+    dummies_frame = pd.get_dummies(df.iloc[:,1:])
     df_dummies = df_dummies.reindex(columns = dummies_frame.columns, fill_value=0)
     return df_dummies
