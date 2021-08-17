@@ -17,7 +17,7 @@ def model_predict(param_list):
     
     X = pd.DataFrame(param_list)
     print(X)
-    X = X.reindex(labels = cols, axis = 1, fill_value = 0).drop(columns = ['Price'])
+    X = X.reindex(labels = cols, axis = 1, fill_value = 0)
     predicted_price = hp_model.predict(X)
 
     return predicted_price
