@@ -5,6 +5,7 @@ from sklearn.model_selection import GridSearchCV, cross_validate, cross_val_scor
 from sklearn.ensemble import RandomForestRegressor
 
 df = pd.read_csv('sao-paulo-properties-april-2019.csv')
+df = df.iloc[:,:14]
 
 cols = ['Condo', 'Size', 'Rooms', 'Toilets', 'Suites', 'Parking',
        'Elevator', 'Furnished', 'Swimming Pool', 'New', 'District',
