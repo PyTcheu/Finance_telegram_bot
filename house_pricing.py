@@ -33,7 +33,6 @@ def predict_house_price(update, context):
 
 def get_dummies(data, df):
     df_dummies = pd.get_dummies(data)
-    dummies_frame = pd.get_dummies(df.iloc[:,1:])
+    dummies_frame = pd.get_dummies(df.iloc[:1,1:])
     df_dummies = df_dummies.reindex(columns = dummies_frame.columns, fill_value=0)
-    print(df_dummies.shape)
     return df_dummies
