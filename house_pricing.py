@@ -13,6 +13,6 @@ def model_predict(cond, size, rooms, toilets, suits, parking, elevator, furnishe
 
 
 def predict_house_price(update, context):
-    parameters = [].join(context.args)
+    parameters = " ".join(context.args).split(' ')
     final_price = model_predict(parameters)
     update.message.reply_text("O valor previsto para esse imovel é: " + str(final_price))
