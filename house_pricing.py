@@ -14,8 +14,8 @@ filename = 'finalized_model.sav'
 hp_model = pickle.load(open(filename, 'rb'))
 
 def model_predict(param_list):
+    print(param_list)
     X = pd.DataFrame(param_list, columns=cols)
-    print(X)
     X = X.reindex(labels = cols, axis = 1, fill_value = 0).drop(columns = ['Price'])
     predicted_price = hp_model.predict(X)
 
