@@ -15,7 +15,7 @@ hp_model = pickle.load(open(filename, 'rb'))
 
 def model_predict(param_list):
     X = pd.DataFrame(param_list, columns=cols)
-
+    print(X)
     X = X.reindex(labels = cols, axis = 1, fill_value = 0).drop(columns = ['Price'])
     predicted_price = hp_model.predict(X)
 
@@ -24,6 +24,5 @@ def model_predict(param_list):
 
 def predict_house_price(update, context):
     parameters = " ".join(context.args).split(' ')
-    print(parameters)
     final_price = model_predict(parameters)
     update.message.reply_text("O valor previsto para esse imovel é: " + str(final_price))
