@@ -6,7 +6,7 @@ from sklearn.ensemble import RandomForestRegressor
 
 df = pd.read_csv('sao-paulo-properties-april-2019.csv')
 df = df.iloc[:,:14]
-cols = raw_data.iloc[:,1:14].columns
+cols = df.iloc[:,1:14].columns
 
 filename = 'finalized_model.sav'
 
