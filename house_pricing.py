@@ -24,7 +24,7 @@ def predict_house_price(update, context):
     parameters = " ".join(context.args).split(' ')
     print(parameters)
     final_price = model_predict(parameters)
-    update.message.reply_text("O valor previsto para esse imovel é: " + str(final_price))
+    update.message.reply_text("O valor previsto para esse imovel é R$: " + str(round(final_price[0],2)))
 
 
 def get_dummies(data, df):
@@ -40,4 +40,4 @@ def get_dummies(data, df):
     df_b = df_b.reindex(columns = dummies_frame.columns, fill_value=0).iloc[:,10:]
     
     df_final = pd.concat([df_a, df_b], axis=1)
-    return df_final[0]
+    return df_final
