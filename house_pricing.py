@@ -40,4 +40,4 @@ def get_dummies(data, df):
     df_b = df_b.reindex(columns = dummies_frame.columns, fill_value=0).iloc[:,10:]
     
     df_final = pd.concat([df_a, df_b], axis=1)
-    return df_final
+    return df_final[0]
