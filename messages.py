@@ -3,7 +3,14 @@ import random
 import house_pricing as hp
 
 def help(update, context):
-    text = "Olá Kamako, precisando de uma ajuda? Segue lista de comandos e parâmetros: \n\n"            "/dolar ou /vilzyn - Cotação atual do dólar \n"            "/euro - Cotação atual do Euro \n"            "/stock <ação> - Retorna o valor da ação e sua variação no dia \n"            "/chart <ação> - Retorna o gráfico da performance da ação e seu RSI \n"            "/simulate_fii <fii> <valor inicial> <meses> <aporte em cotas> - Realiza uma simulação de FIIs a longo prazo com determinado aporte em quantidade de cotas \n"
+    text = "Olá Kamako, precisando de uma ajuda? Segue lista de comandos e parâmetros: \n\n" \
+                "/dolar ou /vilzyn - Cotação atual do dólar \n" \
+                "/euro - Cotação atual do Euro \n" \
+                "/stock <ação> - Retorna o valor da ação e sua variação no dia \n" \
+                "/chart <ação> - Retorna o gráfico da performance da ação e seu RSI \n" \
+                "/simulate_fii <fii> <valor inicial> <meses> <aporte em cotas> - Realiza uma simulação de FIIs a longo prazo com determinado aporte em quantidade de cotas \n" \
+                "/predict_house_price <condominio> <area> <quartos> <banheiros> <suites> <vagas estacionamento> <elevador> <mobiliado> <piscina> <novo> <bairro> <rent/sale> <apt/casa> \n" \
+                " Para respostas de sim ou não, indique 1-Sim e 0-Não \n"
     context.bot.send_message(chat_id=update.effective_chat.id, text=text)
 
 
