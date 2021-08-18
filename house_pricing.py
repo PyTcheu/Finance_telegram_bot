@@ -19,6 +19,7 @@ hp_model = pickle.load(open(filename, 'rb'))
 def model_predict(param_list):
     
     X = pd.DataFrame(get_dummies(param_list, df)).iloc[1:,:]
+    print(X)
     predicted_price = hp_model.predict(X)
 
     return predicted_price
