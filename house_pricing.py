@@ -36,5 +36,5 @@ def get_dummies(data, df):
     dummies_frame = pd.get_dummies(df.iloc[:,11:14])
     df_dummies = df_dummies.reindex(columns = dummies_frame.columns, fill_value=0)
     
-    df_final = pd.concat([df_a, df_dummies])
+    df_final = pd.concat([df_a, df_dummies], axis=1)
     return df_final
